@@ -10,7 +10,8 @@ import albumData from './../data/albums';
 		 });
 
 		 this.state = {
-			 album: album
+			 album: album,
+			 song: album.songs
 		 };
 	 }
 
@@ -24,19 +25,28 @@ import albumData from './../data/albums';
 						<h2 className="artist">{this.state.album.artist}</h2>
 						<div id="release-info">{this.state.album.releaseInfo}</div>
 					</div>
-       </section>
-			 <table id="song-list">
-           <colgroup>
-             <col id="song-number-column" />
-             <col id="song-title-column" />
-             <col id="song-duration-column" />
-           </colgroup>
-           <tbody>
-           </tbody>
-         </table>
+				</section>
+				<table id="song-list">
+					<colgroup>
+						<col id="song-number-column" />
+						<col id="song-title-column" />
+						<col id="song-duration-column" />
+					</colgroup>
+					<tbody>
+						{
+							this.state.song.map( (song, index) =>
+								<tr key={index}>
+									<td>{index+1}</td>
+									<td>{song.title}</td>
+									<td>{song.duration}</td>
+								</tr>
+							)
+						}
+					</tbody>
+				</table>
 			</section>
-     );
-   }
+);
+}
  }
 
  export default Album;
