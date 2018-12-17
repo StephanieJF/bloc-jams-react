@@ -11,8 +11,12 @@ import albumData from './../data/albums';
 
 		 this.state = {
 			 album: album,
-			 song: album.songs
+			 currentSong: album.songs[0],
+			 isPlaying: false
 		 };
+
+	 	this.audioElement = document.createElement('audio');
+		this.audioElement.src = album.songs[0].audioSrc;
 	 }
 
    render() {
