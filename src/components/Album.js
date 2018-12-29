@@ -12,7 +12,8 @@ import albumData from './../data/albums';
 		 this.state = {
 			 album: album,
 			 currentSong: album.songs[0],
-			 isPlaying: false
+			 isPlaying: false,
+			 isHovering: false
 		 };
 
 	 	this.audioElement = document.createElement('audio');
@@ -44,6 +45,15 @@ import albumData from './../data/albums';
 		 }
 	 }
 
+	 handleMouseEnter(song) {
+		 this.setState({ isHovering: song });
+	 }
+
+	 handleMouseLeave(song) {
+		 this.setState({ isHovering: false });
+	 }
+
+
    render() {
      return (
        <section className="album">
@@ -63,8 +73,29 @@ import albumData from './../data/albums';
 					</colgroup>
 					<tbody>
              {this.state.album.songs.map( (song, index) =>
-               <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
-									<td>{index+1}</td>
+               <tr className="song" key={index}
+							 onClick={() => this.handleSongClick(song)}
+							 onMouseEnter={() => this.handleMouseEnter(song)}
+							 onMouseLeave={() => this.handleMouseLeave(song)}>
+									<td>
+									{(() => {
+										if (this.state.isHovering == song && this.state.isHovering != this.state.isPlaying) {
+											return (
+												<span className="icon ion-md-play-circle"></span>
+											)
+										}
+										else if (this.state.isPlaying && this.state.currentSong == song) {
+											return (
+												<span className="icon ion-md-pause"></span>
+											)
+										}
+										else {
+											return (
+												<td>{index+1}</td>
+											)
+										};
+									}) ()}
+									</td>
 									<td>{song.title}</td>
 									<td>{song.duration}</td>
 								</tr>
