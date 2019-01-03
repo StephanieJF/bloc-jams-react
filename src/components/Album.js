@@ -13,7 +13,7 @@ import albumData from './../data/albums';
 			 album: album,
 			 currentSong: album.songs[0],
 			 isPlaying: false,
-			 isHovering: false
+			 currentSongNumber: null
 		 };
 
 	 	this.audioElement = document.createElement('audio');
@@ -40,17 +40,29 @@ import albumData from './../data/albums';
 		 if (this.state.isPlaying && isSameSong) {
 			 this.pause();
 		 } else {
-			 if (!isSameSong) { this.setSong(song); }
+			 if (!isSameSong) {
+				 this.setSong(song);
+			 }
 			 this.play();
 		 }
 	 }
 
-	 handleMouseEnter(song) {
-		 this.setState({ isHovering: song });
+	 handleMouseEnter(index) {
+		 this.setState({ currentSongNumber: index });
 	 }
 
-	 handleMouseLeave(song) {
-		 this.setState({ isHovering: false });
+	 handleMouseLeave() {
+		 this.setState({ currentSongNumber: null });
+	 }
+
+	 handleSongIcon(song, index) {
+		 if ((song === this.state.currentSong) && this.state.isPlaying) {
+			 return <span className="icon ion-md-pause"></span>
+		 } else if (index === this.state.album.songs.findIndex(song => this.state.currentSong === song && this.state.isPlaying) || index === this.state.currentSongNumber) {
+		 	 return <span className="icon ion-md-play-circle"></span>
+		 } else {
+			 return index + 1
+		 }
 	 }
 
 
@@ -73,29 +85,12 @@ import albumData from './../data/albums';
 					</colgroup>
 					<tbody>
              {this.state.album.songs.map( (song, index) =>
-               <tr className="song" key={index}
+               <tr className="song"
+							 key={index}
 							 onClick={() => this.handleSongClick(song)}
-							 onMouseEnter={() => this.handleMouseEnter(song)}
-							 onMouseLeave={() => this.handleMouseLeave(song)}>
-									<td>
-									{(() => {
-										if (this.state.isHovering == song && this.state.isHovering != this.state.isPlaying) {
-											return (
-												<span className="icon ion-md-play-circle"></span>
-											)
-										}
-										else if (this.state.isPlaying && this.state.currentSong == song) {
-											return (
-												<span className="icon ion-md-pause"></span>
-											)
-										}
-										else {
-											return (
-												<td>{index+1}</td>
-											)
-										};
-									}) ()}
-									</td>
+							 onMouseEnter={() => this.handleMouseEnter(index)}
+							 onMouseLeave={() => this.handleMouseLeave()}>
+									<td className="songNumber">{this.handleSongIcon(song, index)}</td>
 									<td>{song.title}</td>
 									<td>{song.duration}</td>
 								</tr>
