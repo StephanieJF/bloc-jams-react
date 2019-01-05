@@ -58,7 +58,7 @@ import albumData from './../data/albums';
 	 handleSongIcon(song, index) {
 		 if ((song === this.state.currentSong) && this.state.isPlaying) {
 			 return <span className="icon ion-md-pause"></span>
-		 } else if (index === this.state.album.songs.findIndex(song => this.state.currentSong === song && this.state.isPlaying) || index === this.state.currentSongNumber) {
+		 } else if (index === this.state.album.songs.findIndex(song => this.state.currentSong === song) || index === this.state.currentSongNumber) {
 		 	 return <span className="icon ion-md-play-circle"></span>
 		 } else {
 			 return index + 1
