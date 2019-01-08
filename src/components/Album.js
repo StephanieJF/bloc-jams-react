@@ -100,7 +100,9 @@ import PlayerBar from './PlayerBar';
 
 	 formatTime(time){
 		 const mins = Math.floor(time / 60);
-		 const secs = Math.floor(time % 60);
+		 const secs = Math.floor(time - (mins * 60));
+
+			 return '' + mins + ':' + secs
 	 }
 
 	 handleVolumeChange(e) {
@@ -165,6 +167,7 @@ import PlayerBar from './PlayerBar';
 					currentTime={this.audioElement.currentTime}
 					duration={this.audioElement.duration}
 					volume={this.audioElement.volume}
+					formatTime={() => this.formatTime(this.state.currentTime)}
 					handleSongClick={() => this.handleSongClick(this.state.currentSong)}
 					handlePrevClick={() => this.handlePrevClick()}
 					handleNextClick={() => this.handleNextClick()}
