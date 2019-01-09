@@ -32,7 +32,17 @@
 }
 
 #song-list {
-     justify-content: center;
-     display: flex;
-		 margin-top: 15px;
+  justify-content: center;
+  display: flex;
+	margin-top: 15px;
+}
+
+#time-control {
+	justify-content: center;
+	display: flex;
+}
+
+#volume-control {
+	justify-content: center;
+	display: flex;
 }

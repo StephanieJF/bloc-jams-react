@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
 import PlayerBar from './PlayerBar';
+import formatTime from './../modules/formatTime'
 
  class Album extends Component {
 	 constructor(props) {
@@ -98,13 +99,6 @@ import PlayerBar from './PlayerBar';
      this.setState({ currentTime: newTime });
    }
 
-	 formatTime(time){
-		 const mins = Math.floor(time / 60);
-		 const secs = Math.floor(time - (mins * 60));
-
-			 return '' + mins + ':' + secs
-	 }
-
 	 handleVolumeChange(e) {
 		 const newVol = e.target.value;
 		 this.audioElement.volume = newVol;
@@ -156,7 +150,7 @@ import PlayerBar from './PlayerBar';
 							 onMouseLeave={() => this.handleMouseLeave()}>
 									<td className="songNumber">{this.handleSongIcon(song, index)}</td>
 									<td>{song.title}</td>
-									<td>{song.duration}</td>
+									<td>{formatTime(song.duration)}</td>
 								</tr>
 							)}
 					</tbody>
@@ -167,7 +161,6 @@ import PlayerBar from './PlayerBar';
 					currentTime={this.audioElement.currentTime}
 					duration={this.audioElement.duration}
 					volume={this.audioElement.volume}
-					formatTime={() => this.formatTime(this.state.currentTime)}
 					handleSongClick={() => this.handleSongClick(this.state.currentSong)}
 					handlePrevClick={() => this.handlePrevClick()}
 					handleNextClick={() => this.handleNextClick()}
